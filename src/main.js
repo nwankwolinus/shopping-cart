@@ -1,37 +1,18 @@
 let shop = document.getElementById("shop");
 
-// let shopItemsData = [{
-//     id: "hdhjffhv",
-//     name: "Casual Shirt",
-//     price: 45,
-//     desc: "lorem ipsum dolor sit amet consecttetur laprt",
-//     img: "images/img-1.jpg"
-// },
-// {
-//     id: "apsoedlj",
-//     name: "Office Shirt",
-//     price: 100,
-//     desc: "lorem ipsum dolor sit amet consecttetur laprt",
-//     img: "images/img-2.jpg"
-// }, 
-// {
-//     id: "sjdhchdj",
-//     name: "T Shirt",
-//     price: 25,
-//     desc: "lorem ipsum dolor sit amet consecttetur laprt",
-//     img: "images/img-3.jpg"
-// }, 
-// {
-//     id: "rirftjuy",
-//     name: "Men's Suit",
-//     price: 300,
-//     desc: "lorem ipsum dolor sit amet consectetur laprt",
-//     img: "images/img-4.jpg"
-// },
-// ];
+/**
+ * ! Basket to hold all the selected items
+ * ? the getItem part is retrieving data from the local storage
+ * ? if local storage is blank, basket becomes an empty array
+ */
 
-// let basket = [];
 let basket = JSON.parse(localStorage.getItem("data")) || []
+
+/**
+ * ! Generates the shop with product cards composed of
+ * ! images, title, price, buttons, description
+ */
+
 let generateShop = () => {
     return (shop.innerHTML = shopItemsData.map((x)=>{
         let {id, name, price, desc, img } = x;
@@ -60,6 +41,10 @@ let generateShop = () => {
 
 generateShop();
 
+/**
+ * ! used to increase the selected product item quantity by 1
+ */
+
 let increment = (id) => {
     let selectedItem = id;
     let search = basket.find((x) => x.id === selectedItem.id);
@@ -78,6 +63,11 @@ let increment = (id) => {
     update (selectedItem.id);
     localStorage.setItem("data", JSON.stringify(basket));
 };
+
+/**
+ * ! used to decrease the selected product item quantity by 1
+ */
+
 let decrement = (id) => {
     let selectedItem = id;
     let search = basket.find((x) => x.id === selectedItem.id);
@@ -95,12 +85,21 @@ let decrement = (id) => {
 
     localStorage.setItem("data", JSON.stringify(basket));
 };
+
+/**
+ * ! To update the digits of picked items on each item card
+ */
+
 let update = (id) => {
     let search = basket.find((x) => x.id === id);
     // console.log(search.item);
     document.getElementById(id).innerHTML = search.item;
     calculation();
 };
+
+/**
+ * ! To calculate total amount of selected Items
+ */
 
 let calculation = () => {
     let cartIcon = document.getElementById("cartAmount");
